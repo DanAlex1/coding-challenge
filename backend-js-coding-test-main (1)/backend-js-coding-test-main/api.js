@@ -57,6 +57,8 @@ async function loadEmployees() {
 }
 
 //This function takes the companies and employees arrays and adds the employees to their companies
+//used a spread operator to copy the company object
+//then add an employee based on their ID, if it matches the company ID
 function putEmployeesInCompanies(companies, employees) {
   return companies.map((company) => ({
     ...company,
