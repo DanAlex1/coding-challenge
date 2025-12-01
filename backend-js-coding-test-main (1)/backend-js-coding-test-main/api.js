@@ -5,6 +5,7 @@ const path = require("node:path");
 const app = express();
 const port = process.env.PORT || 3000;
 
+//This function goes through all the JSON files in the data/companies folder and combines them into one array
 async function loadCompanies() {
   const companies = [];
   const companiesDir = "data/companies";
@@ -31,6 +32,7 @@ async function loadCompanies() {
   return companies;
 }
 
+//This function does the same thing as the above function but for employees
 async function loadEmployees() {
   const employees = [];
   const employeesDir = path.join(__dirname, "data", "employees");
@@ -54,6 +56,7 @@ async function loadEmployees() {
   return employees;
 }
 
+//This function takes the companies and employees arrays and adds the employees to their companies
 function putEmployeesInCompanies(companies, employees) {
   return companies.map((company) => ({
     ...company,
@@ -61,6 +64,7 @@ function putEmployeesInCompanies(companies, employees) {
   }));
 }
 
+//This is the main endpoint to displaying the companies. It also adds filtering and pagination
 app.get("/companies", async (req, res) => {
   try {
     let companies = await loadCompanies();
@@ -110,6 +114,8 @@ app.get("/companies", async (req, res) => {
   }
 });
 
+
+//This is the second endpoint to get a specific company by its ID
 app.get("/companies/:id", async (req, res) => {
   try {
     let companies = await loadCompanies();
